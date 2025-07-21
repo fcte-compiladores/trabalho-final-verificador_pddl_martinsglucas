@@ -1,0 +1,45 @@
+?start          : program
+
+program         : domain | problem
+
+domain          : "(" "define" define_domain requirements types constants_def? predicates action*")"
+
+define_domain   : "(" "domain" IDENTIFIER ")"
+
+requirements    : "(" ":requirements" (":" IDENTIFIER)* ")"
+types           : "(" ":types" type* ")"
+constants_def   : "(" ":constants" constants* ")"
+constants       : objects_def "-" IDENTIFIER
+type            : IDENTIFIER
+
+objects_def     : ("?"? IDENTIFIER)*
+
+predicates      : "(" ":predicates" predicate_def* ")"
+predicate_def   : "(" IDENTIFIER predicate_arg* ")"
+
+predicate_arg   : objects_def ["-" IDENTIFIER]
+
+?argument       : objects_def ["-" IDENTIFIER]
+                | call
+
+action          : "(" ":action" IDENTIFIER parameters precondition effect ")"
+parameters      : ":parameters" "(" argument* ")"
+precondition    : ":precondition" call*
+effect          : ":effect" call*
+forall          : "(" "forall" "(" argument* ")" call ")"
+?call           : "(" IDENTIFIER argument* ")"
+                | forall
+
+problem         : "(" "define" define_problem domain_ref objects init goal ")"
+
+define_problem  : "(" "problem" IDENTIFIER ")"
+domain_ref      : "(" ":domain" IDENTIFIER ")"
+objects         : "(" ":objects" argument* ")"
+init            : "(" ":init" call* ")"
+goal            : "(" ":goal" call* ")"
+
+IDENTIFIER      : /[a-z0-9_-]+/
+NUMBER          : /([1-9][0-9]*|0)(\.[0-9]+)?/ 
+COMMENT         : ";" /[^\n]*/
+
+%ignore /\s/ | COMMENT
