@@ -24,11 +24,11 @@ A ferramenta utiliza a biblioteca Lark para as etapas de análise léxica e sint
 
 - Declarações de ``domain`` e ``problem``.
 
-- Seção ``:requirements`` com suporte a ``:strips``, ``:typing``, e ``:negative-preconditions``.
+- Seção ``:requirements`` com suporte a ``:strips``, ``:typing``, ``:negative-preconditions`` e ``disjunctive-preconditions``.
 
 - Definição de ``:types``, ``:constants``, ``:predicates`` e ``:actions``.
 
-- Estruturas lógicas básicas como ``and``, ``not`` e ``forall`` (em precondições e efeitos).
+- Estruturas lógicas básicas como ``and``, ``or``, ``not`` e ``forall`` (em precondições e efeitos), e ``:conditional-effects``.
 
 - Seções ``:objects``, ``:init`` e ``:goal`` para o problema.
 
@@ -97,6 +97,8 @@ O projeto contém uma pasta ``exemplos/`` com diversos arquivos PDDL organizados
 
 - ``valido3_fcte_entregas/``: Um exemplo mais complexo de entregas.
 
+- ``valido4_simples/``: Um domínio simples com ações condicionais usando ``when`` e ``or``.
+
 Estes exemplos representam domínios e problemas PDDL bem-formados e semanticamente corretos. O verificador deve ser executado sem lançar exceções, imprimindo as mensagens de sucesso ``✅ Domínio declarado corretamente!`` e ``✅ Problema declarado corretamente!``.
 
 ### Exemplos inválidos
@@ -150,7 +152,10 @@ O código do projeto está organizado no diretório ``pddl`` nos seguintes módu
 
 ## Bugs/Limitações/Problemas Conhecidos
 
-Embora suporte os requisitos e recursos básicos e alguns avançados, o verificador não implementa a totalidade das funcionalidades do PDDL (``derived-predicates``, ``preferences``, ``numeric-fluents`` com operações complexas, certas formas de efeitos condicionais ou quantificadores como ``conditional-effects`` e ``adl``, etc.).
+Embora suporte os requisitos e recursos básicos e alguns avançados, o verificador não implementa a totalidade das funcionalidades do PDDL (``derived-predicates``, ``equality``, ``preferences``, ``numeric-fluents`` com operações complexas, e quantificadores avançados como ``adl``, etc.).
+
+> Em particular, o requisito ``:adl`` é um meta-requisito que engloba diversas funcionalidades: algumas de suas sub-funcionalidades já são suportadas (como ``conditional-effects``, ``disjunctive-preconditions``, e ``negative-preconditions``), enquanto outras (como ``derived-predicates``, ``preferences``, ``numeric-fluents`` com operações complexas, e certas formas de quantificadores avançados) ainda não estão implementadas.
 
 Futuras melhorias podem incluir:
-- Suporte a mais requisitos PDDL, como ``:conditional-effects`` e ``:adl``.
+- Suporte a mais requisitos PDDL, como ``:adl`` (completando o suporte a quantificadores e outras features).
+- Implementação de ``equality``, ``derived-predicates``, ``preferences``, ``numeric-fluents`` com operações complexas, etc.
