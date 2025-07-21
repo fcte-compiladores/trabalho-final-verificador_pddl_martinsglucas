@@ -27,8 +27,10 @@ parameters      : ":parameters" "(" argument* ")"
 precondition    : ":precondition" call*
 effect          : ":effect" call*
 forall          : "(" "forall" "(" argument* ")" call ")"
+when            : "(" WHEN_IDENTIFIER call call ")"
 ?call           : "(" IDENTIFIER argument* ")"
                 | forall
+                | when
 
 problem         : "(" "define" define_problem domain_ref objects init goal ")"
 
@@ -39,6 +41,7 @@ init            : "(" ":init" call* ")"
 goal            : "(" ":goal" call* ")"
 
 IDENTIFIER      : /[a-z0-9_-]+/
+WHEN_IDENTIFIER : "when"
 NUMBER          : /([1-9][0-9]*|0)(\.[0-9]+)?/ 
 COMMENT         : ";" /[^\n]*/
 

@@ -245,12 +245,6 @@ class Call(Expr):
                 
         for arg in self.args:
             arg.eval(ctx)
-            # if not isinstance(arg, (Call, Forall)):
-            #     try:
-            #         if ctx[arg.name]:
-            #             pass
-            #     except KeyError:
-            #         raise PDDLError(f"objeto {arg.name} não declarado", line=arg.line, column=arg.column)
 
 @dataclass
 class Forall(Expr):
@@ -258,9 +252,31 @@ class Forall(Expr):
     call: Call
 
     def eval(self, ctx: Ctx):
+        scope = ctx.push({})
         for obj in self.objs:
-            obj.eval(ctx)
-        self.call.eval(ctx)
+            scope.var_def(obj.name.name, obj)
+            obj.eval(scope)
+        self.call.eval(scope)
+        scope.pop()
+
+@dataclass
+class When(Expr):
+    when: Identifier
+    condition: Call
+    effect: Call
+
+    def eval(self, ctx: Ctx):
+        try:
+            if ctx["conditional-effects"]:
+                pass
+        except KeyError:
+            raise MissingRequirementError(
+                "erro ao declarar when, necessário :conditional-effects",
+                line=self.when.line,
+                column=self.when.column
+            )
+        self.condition.eval(ctx)
+        self.effect.eval(ctx)
 
 @dataclass
 class Action(Expr):

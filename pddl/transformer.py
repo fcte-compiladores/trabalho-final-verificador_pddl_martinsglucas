@@ -68,6 +68,9 @@ class PDDLTransformer(Transformer):
     def forall(self, objs: list, call: Call):
         return Forall(objs, call)
     
+    def when(self, when: Identifier, condition: Call, effect: Call):
+        return When(when, condition, effect)
+    
     def parameters(self, *args):
         return list(obj for arg in args for obj in arg)
 
@@ -101,6 +104,10 @@ class PDDLTransformer(Transformer):
     # TERMINAIS
 
     def IDENTIFIER(self, token: Token) -> Identifier:
+        name = str(token)
+        return Identifier(name, token.line, token.column)
+    
+    def WHEN_IDENTIFIER(self, token: Token) -> Identifier:
         name = str(token)
         return Identifier(name, token.line, token.column)
 
