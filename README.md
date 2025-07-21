@@ -123,10 +123,9 @@ Estes exemplos representam domínios e problemas PDDL bem-formados e semanticame
 
     - A gramática PDDL (``grammar.lark``).
     - A totalidade dos nós da Árvore de Sintaxe Abstrata (AST) específica para PDDL (``ast.py``).
-    - A lógica de validação semântica (método ``eval`` nos nós da AST)
+    - A lógica de validação semântica (método ``eval`` nos nós da AST) e modificação do método ``eval`` para lidar com a análise semântica de ambos os arquivos, garantindo que o problema esteja validado em relação ao domínio
     - As classes de erro personalizadas para PDDL (``errors.py``) e seu tratamento.
-    - A atualização da interface de linha de comando (CLI), permitindo que o verificador aceite dois arquivos como argumentos: um arquivo de domínio e um arquivo de problema PDDL.
-    - A modificação do método ``eval`` para lidar com a análise semântica de ambos os arquivos, garantindo que o problema esteja validado em relação ao domínio.
+    - A atualização da interface de linha de comando (CLI), permitindo que o verificador aceite dois arquivos como argumentos: um arquivo de domínio e um arquivo de problema PDDL..
     - A integração da análise de requisitos.
 
 ## Estrutura
@@ -152,3 +151,6 @@ O código do projeto está organizado no diretório ``pddl`` nos seguintes módu
 ## Bugs/Limitações/Problemas Conhecidos
 
 Embora suporte os requisitos e recursos básicos e alguns avançados, o verificador não implementa a totalidade das funcionalidades do PDDL (``derived-predicates``, ``preferences``, ``numeric-fluents`` com operações complexas, certas formas de efeitos condicionais ou quantificadores como ``conditional-effects`` e ``adl``, etc.).
+
+Futuras melhorias podem incluir:
+- Suporte a mais requisitos PDDL, como ``:conditional-effects`` e ``:adl``.
