@@ -107,7 +107,13 @@ def main():
             # pddl_eval(source)
             from .ast import Predicate, Identifier
             # pddl_eval(domain_source)
-            _, ctx = pddl_eval(domain_source, Ctx({"and": Predicate(Identifier("and", 0, 0), None, "strips"), "not": Predicate(Identifier("not", 0, 0), None, "negative-preconditions")}), file_path=args.domain_file)
+            _, ctx = pddl_eval(domain_source, 
+                               Ctx({
+                                   "and": Predicate(Identifier("and", 0, 0), None, "strips"), 
+                                   "not": Predicate(Identifier("not", 0, 0), None, "negative-preconditions"),
+                                   "or": Predicate(Identifier("or", 0, 0), None, "disjunctive-preconditions"),
+                                   }), 
+                                   file_path=args.domain_file)
             pddl_eval(problem_source, ctx, file_path=args.problem_file)
         except Exception as e:
             on_error(e, args.pm)
