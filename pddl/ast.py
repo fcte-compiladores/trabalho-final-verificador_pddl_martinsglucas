@@ -239,7 +239,7 @@ class Call(Expr):
                             [f"**?{obj.name.name} - {obj.type.name}**" if obj.name.name == arg_2.name.name 
                                 else f"?{obj.name.name} - {obj.type.name}"
                                 for obj in predicate.args]
-                            )}) esperava argumento do tipo {expected_type}, mas recebeu {real_type}", 
+                            )}) esperava argumento do tipo '{expected_type}', mas recebeu '{real_type}'", 
                         line=arg_1.line, 
                         column=arg_1.column)
                 

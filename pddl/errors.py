@@ -15,10 +15,14 @@ class PDDLError(Exception):
     """
 
     def __init__(self, msg, line, column, file_path = None):
-        super().__init__(f"{file_path}: linha {line}, coluna {column}: {msg}")
+        super().__init__(msg)
         self.msg = msg
         self.line = line
         self.column = column
+        self.file_path = file_path
+
+    def __str__(self):
+        return f"File \"{self.file_path}\", line {self.line}, column {self.column}: {self.msg}"
 
 class TypeError(PDDLError):
     """Exceção levantada quando um tipo é inválido ou não declarado."""
